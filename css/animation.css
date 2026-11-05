@@ -1,0 +1,474 @@
+/* =========================================================
+   RITEE - animation.css   (link AFTER style.css)
+   1) scroll reveal   2) section details   3) hover effects
+   Buttons are intentionally left untouched.
+   ========================================================= */
+
+:root {
+  --ease-out: cubic-bezier(0.22, 0.8, 0.25, 1);
+  --ease-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* =========================================================
+   1) SCROLL REVEAL  (classes are added by animation.js)
+   animation uses fill-mode "backwards" so hover transforms
+   keep working once the reveal has finished.
+   ========================================================= */
+.anim-ready .anim {
+  opacity: 0;
+}
+.anim-ready .anim.in-view {
+  opacity: 1;
+  animation-name: var(--a, fadeUp);
+  animation-duration: var(--dur, 0.85s);
+  animation-delay: var(--delay, 0ms);
+  animation-timing-function: var(--ease, var(--ease-out));
+  animation-fill-mode: backwards;
+}
+.anim-ready .anim.anim-instant {
+  opacity: 1;
+  animation: none;
+}
+
+.anim-up {
+  --a: fadeUp;
+}
+.anim-down {
+  --a: fadeDown;
+}
+.anim-left {
+  --a: fadeFromLeft;
+}
+.anim-right {
+  --a: fadeFromRight;
+}
+.anim-zoom {
+  --a: zoomIn;
+}
+.anim-pop {
+  --a: popIn;
+  --ease: var(--ease-back);
+}
+.anim-line {
+  --a: lineGrow;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes fadeDown {
+  from {
+    opacity: 0;
+    transform: translateY(-28px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes fadeFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-56px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes fadeFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(56px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: scale(0.6) translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes lineGrow {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+@keyframes imgSettle {
+  from {
+    transform: scale(1.18);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes starPop {
+  from {
+    opacity: 0;
+    transform: scale(0) rotate(-40deg);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes pinDrop {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-24px) scale(0.4);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%);
+  }
+}
+@keyframes floatY {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -8px;
+  }
+}
+
+/* =========================================================
+   2) SECTION DETAILS
+   ========================================================= */
+
+/* scroll progress bar */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1100;
+  width: 100%;
+  height: 3px;
+  transform: scaleX(0);
+  transform-origin: left;
+  background: linear-gradient(90deg, var(--red), #f4533f 45%, var(--blue));
+  pointer-events: none;
+}
+
+/* red underline grows from the left */
+.career-line {
+  transform-origin: left;
+}
+
+/* hero: images settle, floating cards drift gently */
+.hero-photo.in-view img,
+.career-img.in-view img {
+  animation: imgSettle 1.4s var(--ease-out) backwards;
+}
+
+.anim-ready .float-pill.in-view {
+  animation:
+    popIn 0.7s var(--ease-back) var(--delay, 0ms) backwards,
+    floatY 5.5s ease-in-out calc(var(--delay, 0ms) + 0.9s) infinite;
+}
+.anim-ready .float-pill.pill-2.in-view {
+  animation-duration: 0.7s, 4.8s;
+}
+.anim-ready .float-pill.pill-3.in-view {
+  animation-duration: 0.7s, 6.2s;
+}
+.anim-ready .legacy-card.in-view {
+  animation:
+    fadeFromLeft 0.85s var(--ease-out) var(--delay, 0ms) backwards,
+    floatY 6s ease-in-out calc(var(--delay, 0ms) + 1s) infinite;
+}
+.anim-ready .mentor-card.in-view {
+  animation:
+    fadeFromRight 0.85s var(--ease-out) var(--delay, 0ms) backwards,
+    floatY 6.8s ease-in-out calc(var(--delay, 0ms) + 1.2s) infinite;
+}
+.anim-ready .anim.anim-instant.float-pill,
+.anim-ready .anim.anim-instant.legacy-card,
+.anim-ready .anim.anim-instant.mentor-card {
+  animation: floatY 6s ease-in-out infinite;
+}
+
+/* stand-out timeline: icon pops, connector line draws down */
+.anim-ready .stand-timeline li:not(:last-child)::after {
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.7s var(--ease-out) calc(var(--delay, 0ms) + 0.35s);
+}
+.anim-ready .stand-timeline li.in-view:not(:last-child)::after {
+  transform: scaleY(1);
+}
+.stand-timeline li.in-view .stand-icon {
+  animation: popIn 0.6s var(--ease-back) calc(var(--delay, 0ms) + 0.1s) backwards;
+}
+
+/* testimonial stars twinkle in one by one */
+.testi-card.in-view .testi-stars i {
+  animation: starPop 0.5s var(--ease-back) backwards;
+}
+.testi-card.in-view .testi-stars i:nth-child(1) {
+  animation-delay: calc(var(--delay, 0ms) + 0.35s);
+}
+.testi-card.in-view .testi-stars i:nth-child(2) {
+  animation-delay: calc(var(--delay, 0ms) + 0.43s);
+}
+.testi-card.in-view .testi-stars i:nth-child(3) {
+  animation-delay: calc(var(--delay, 0ms) + 0.51s);
+}
+.testi-card.in-view .testi-stars i:nth-child(4) {
+  animation-delay: calc(var(--delay, 0ms) + 0.59s);
+}
+.testi-card.in-view .testi-stars i:nth-child(5) {
+  animation-delay: calc(var(--delay, 0ms) + 0.67s);
+}
+
+/* admission: pin drops onto the card, dashed connector fades in */
+.adm-step.in-view .adm-pin {
+  animation: pinDrop 0.6s var(--ease-back) calc(var(--delay, 0ms) + 0.3s) backwards;
+}
+.anim-ready .adm-step:not(:last-child)::after {
+  opacity: 0;
+  transition: opacity 0.6s ease calc(var(--delay, 0ms) + 0.6s);
+}
+.anim-ready .adm-step.in-view:not(:last-child)::after {
+  opacity: 1;
+}
+
+/* =========================================================
+   3) HOVER EFFECTS  (no buttons)
+   ========================================================= */
+
+/* ---- Why RITEE rows ---- */
+.why-row {
+  transition:
+    background-color 0.35s ease,
+    transform 0.4s var(--ease-out),
+    box-shadow 0.4s var(--ease-out);
+}
+.why-row:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 34px -12px rgba(56, 48, 128, 0.35);
+}
+.why-arrow i {
+  transition: transform 0.35s var(--ease-out);
+}
+.why-row:hover .why-arrow i {
+  transform: rotate(-45deg);
+}
+
+/* ---- Programme cards ---- */
+.prog-card {
+  transition:
+    transform 0.45s var(--ease-out),
+    box-shadow 0.45s var(--ease-out);
+}
+.prog-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 30px 50px -14px rgba(10, 8, 50, 0.5);
+}
+.prog-num {
+  transition: color 0.4s ease;
+}
+.prog-card:hover .prog-num {
+  color: #e0182070;
+}
+.prog-list li {
+  transition: transform 0.3s var(--ease-out);
+}
+.prog-list li:hover {
+  transform: translateX(5px);
+}
+.prog-list li::before {
+  transition: transform 0.3s var(--ease-back);
+}
+.prog-list li:hover::before {
+  transform: scale(1.25);
+}
+
+/* ---- Careers ---- */
+.career-img img,
+.hero-photo img {
+  transition: transform 1.1s var(--ease-out);
+}
+.career-img:hover img,
+.hero-photo:hover img {
+  transform: scale(1.05);
+}
+.career-list li::before {
+  transition:
+    transform 0.3s var(--ease-back),
+    background-color 0.3s ease;
+}
+.career-list li:hover::before {
+  transform: scale(1.8);
+  background: var(--red);
+}
+
+/* ---- Recruiters ---- */
+.rec-card {
+  transition:
+    transform 0.4s var(--ease-out),
+    box-shadow 0.4s var(--ease-out);
+}
+.rec-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 24px 40px -14px rgba(8, 6, 40, 0.55);
+}
+.rec-card img {
+  transition: transform 0.5s var(--ease-out);
+}
+.rec-card:hover img {
+  transform: scale(1.07);
+}
+
+/* ---- Stand-out timeline ---- */
+.stand-icon {
+  transition:
+    transform 0.35s var(--ease-back),
+    box-shadow 0.35s ease;
+}
+.stand-timeline li > div {
+  transition: transform 0.35s var(--ease-out);
+}
+.stand-timeline li:hover .stand-icon {
+  transform: scale(1.12);
+  box-shadow: 0 0 0 7px rgba(56, 48, 128, 0.12);
+}
+.stand-timeline li.is-legacy:hover .stand-icon {
+  box-shadow: 0 0 0 7px rgba(227, 30, 36, 0.14);
+}
+.stand-timeline li:hover > div {
+  transform: translateX(6px);
+}
+
+/* ---- Testimonials ---- */
+.testi-card {
+  transition:
+    transform 0.45s var(--ease-out),
+    box-shadow 0.45s var(--ease-out),
+    border-color 0.3s ease;
+}
+.testi-card:hover {
+  transform: translateY(-8px);
+  border-color: #cfcaf0;
+  box-shadow: 0 26px 46px -18px rgba(56, 48, 128, 0.32);
+}
+.testi-quote {
+  transition:
+    transform 0.4s var(--ease-back),
+    color 0.3s ease;
+}
+.testi-card:hover .testi-quote {
+  color: var(--red);
+  transform: scale(1.2) rotate(-8deg);
+}
+.testi-avatar {
+  transition: transform 0.4s var(--ease-back);
+}
+.testi-card:hover .testi-avatar {
+  transform: scale(1.1);
+}
+
+/* ---- Admission steps ---- */
+.adm-step {
+  transition:
+    transform 0.45s var(--ease-out),
+    box-shadow 0.45s var(--ease-out);
+}
+.adm-step:hover {
+  transform: translateY(-10px) rotate(-1.2deg);
+  box-shadow: 0 34px 50px -12px rgba(8, 6, 40, 0.55);
+}
+.adm-step:nth-child(even):hover {
+  transform: translateY(-10px) rotate(1.2deg);
+}
+.adm-pin {
+  transition: transform 0.35s var(--ease-back);
+}
+.adm-step:hover .adm-pin {
+  transform: translateX(-50%) scale(1.22);
+}
+
+/* ---- FAQ ---- */
+.faq-item {
+  transition: background-color 0.35s ease;
+}
+.faq-item:not(:has(.faq-q[aria-expanded='true'])):hover {
+  background: #e9e6fb;
+}
+.faq-icon {
+  transition:
+    background-color 0.35s ease,
+    color 0.35s ease,
+    transform 0.4s var(--ease-back);
+}
+.faq-item:not(:has(.faq-q[aria-expanded='true'])):hover .faq-icon {
+  transform: rotate(90deg) scale(1.08);
+}
+
+/* ---- Hero floating cards ---- */
+.float-pill,
+.legacy-card,
+.mentor-card {
+  transition:
+    transform 0.35s var(--ease-back),
+    box-shadow 0.35s ease;
+}
+.float-pill:hover,
+.legacy-card:hover,
+.mentor-card:hover {
+  transform: scale(1.06);
+  box-shadow: 0 20px 44px 0 rgba(20, 18, 64, 0.32);
+}
+
+/* ---- Footer link ---- */
+.site-footer a {
+  transition: opacity 0.3s ease;
+}
+.site-footer a:hover {
+  opacity: 0.8;
+}
+
+/* =========================================================
+   Reduced motion: no float loops / no reveal
+   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+  .anim-ready .anim {
+    opacity: 1;
+    animation: none !important;
+  }
+  .float-pill,
+  .legacy-card,
+  .mentor-card {
+    animation: none !important;
+  }
+  .scroll-progress {
+    display: none;
+  }
+}
