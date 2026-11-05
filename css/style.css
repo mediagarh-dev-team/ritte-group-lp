@@ -202,6 +202,7 @@ body {
   font-weight: 500;
   line-height: 1.18;
   letter-spacing: -0.01em;
+  text-transform: capitalize;
 }
 .hero-content p {
   margin: 0 0 26px;

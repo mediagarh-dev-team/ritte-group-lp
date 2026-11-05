@@ -77,8 +77,16 @@
                   <i class="fa-solid fa-check"></i>
                   NAAC A+ Accredited &bull; Est. 2008
                 </span>
-                <h1 class="supreme-fonts">Build A Rewarding Career in Nursing With RITEE</h1>
-
+                <h1 class="supreme-fonts dynamic-heading">Build A Rewarding Career in Nursing With RITEE</h1>
+                <script>
+                  (function () {
+                    var params = new URLSearchParams(window.location.search);
+                    var keyword = params.get('utm_keyword');
+                    if (keyword) {
+                      document.querySelector('.dynamic-heading').textContent = decodeURIComponent(keyword);
+                    }
+                  })();
+                </script>
                 <p class="poppins-font">
                   RITEE College of Nursing, Raipur, offers B.Sc., Post-Basic B.Sc., and M.Sc. Nursing programmes to
                   nurture skilled healthcare professionals by providing them with comprehensive education, expert
@@ -844,7 +852,7 @@
             Apply Now
             <span class="btn-apply-icon"><i class="fa-solid fa-arrow-right"></i></span>
           </a>
-          <a href="#contact" class="btn-outline-pill poppins-font">Contact Us</a>
+          <a href="tel:9302773092" class="btn-outline-pill poppins-font">Contact Us</a>
         </div>
       </div>
     </section>
@@ -887,7 +895,7 @@
             })
               .then(function () {
                 window.location.href =
-                  'thank-you.html' +
+                  'thank-you' +
                   '?name=' +
                   encodeURIComponent(payload.name) +
                   '&phone=' +
@@ -897,7 +905,7 @@
               })
               .catch(function () {
                 window.location.href =
-                  'thank-you.html' +
+                  'thank-you' +
                   '?name=' +
                   encodeURIComponent(payload.name) +
                   '&phone=' +

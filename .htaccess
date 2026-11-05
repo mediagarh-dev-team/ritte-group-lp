@@ -1,0 +1,21 @@
+# RITEE College of Nursing — .htaccess
+
+# Enable URL rewriting
+RewriteEngine On
+
+# Serve /thank-you when /thank-you.html is NOT requested
+# i.e. "thank-you.html" → redirect to clean "thank-you"
+RewriteRule ^thank-you\.html$ /thank-you [R=301,L]
+
+# Internally route clean "thank-you" to thank-you.html (no redirect, user sees /thank-you)
+RewriteRule ^thank-you$ thank-you.html [L]
+
+# Default: hide .html extension on all pages
+# "about.html" → redirect to clean "about"
+RewriteCond %{THE_REQUEST} \s/([^.]+)\.html [NC]
+RewriteRule ^ /%1 [R=301,L]
+
+# Internally serve .html for extensionless URLs
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([^\.]+)$ $1.html [L]
